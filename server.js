@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const db = require('./database/db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const SEGREDO = 'sistema-escolar-secreto-2025';
 
 app.use(cors());
