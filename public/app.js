@@ -47,7 +47,7 @@ function mostrarSistema() {
     document.getElementById('pagina-login').classList.add('escondido');
     document.getElementById('sistema').classList.remove('escondido');
     document.getElementById('nome-utilizador').textContent = localStorage.getItem('username');
-    carregarAlunos();
+    carregarDashboard();
 }
 
 function fazerLogout() {
@@ -60,6 +60,39 @@ function fazerLogout() {
     document.getElementById('login-senha').value = '';
     document.getElementById('login-erro').textContent = '';
 }
+// ---- DASHBOARD ----
+function carregarDashboard() {
+    fetch(`${API}/dashboard`, { headers: headers() })
+        .then(r => r.json())
+        .then(dados => {
+            document.getElementById('stat-alunos').textContent = dados.totalAlunos;
+            document.getElementById('stat-turmas').textContent = dados.totalTurmas;
+            document.getElementById('stat-professores').textContent = dados.totalProfessores;
+            document.getElementById('stat-media').textContent = dados.mediaNotas || '—';
+
+            const grafico = document.getElementById('grafico-disciplinas');
+            grafico.innerHTML = '';
+
+            if (dados.notasPorDisciplina.length === 0) {
+                grafico.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:14px;">Ainda não há notas registadas.</p>';
+                return;
+            }
+
+            const maxMedia = Math.max(...dados.notasPorDisciplina.map(d => d.media));
+
+            dados.notasPorDisciplina.forEach(d => {
+                const largura = Math.round((d.media / 20) * 100);
+                grafico.innerHTML += `
+                    <div class="grafico-linha">
+                        <div class="grafico-nome">${d.disciplina}</div>
+                        <div class="grafico-barra-fundo">
+                            <div class="grafico-barra" style="width:${largura}%"></div>
+                        </div>
+                        <div class="grafico-media">${d.media}</div>
+                    </div>`;
+            });
+        });
+}
 
 // ---- NAVEGAÇÃO ----
 function mostrarSecao(nome) {
@@ -71,6 +104,7 @@ function mostrarSecao(nome) {
 }
 
 function carregarDados(secao) {
+    if (secao === 'dashboard') carregarDashboard();
     if (secao === 'alunos') carregarAlunos();
     if (secao === 'turmas') carregarTurmas();
     if (secao === 'professores') carregarProfessores();

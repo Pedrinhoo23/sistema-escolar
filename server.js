@@ -89,6 +89,24 @@ app.post('/notas', autenticar, (req, res) => {
     const result = db.prepare('INSERT INTO notas (aluno_id, disciplina, nota) VALUES (?, ?, ?)').run(aluno_id, disciplina, nota);
     res.json({ id: result.lastInsertRowid, aluno_id, disciplina, nota });
 });
+// Rota do dashboard
+app.get('/dashboard', autenticar, (req, res) => {
+    const totalAlunos = db.prepare('SELECT COUNT(*) as total FROM alunos').get();
+    const totalTurmas = db.prepare('SELECT COUNT(*) as total FROM turmas').get();
+    const totalProfessores = db.prepare('SELECT COUNT(*) as total FROM professores').get();
+    const mediaNotas = db.prepare('SELECT ROUND(AVG(nota), 1) as media FROM notas').get();
+    const notasPorDisciplina = db.prepare(`
+        SELECT disciplina, ROUND(AVG(nota), 1) as media, COUNT(*) as total
+        FROM notas GROUP BY disciplina
+    `).all();
+    res.json({
+        totalAlunos: totalAlunos.total,
+        totalTurmas: totalTurmas.total,
+        totalProfessores: totalProfessores.total,
+        mediaNotas: mediaNotas.media || 0,
+        notasPorDisciplina
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor a correr em http://localhost:${PORT}`);

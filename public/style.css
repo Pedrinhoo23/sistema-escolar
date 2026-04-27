@@ -318,3 +318,97 @@ tr:hover td {
 .btn-remover:hover {
     background: rgba(255,80,80,0.22);
 }
+/* Dashboard */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.stat-card:hover {
+    background: rgba(255,255,255,0.13);
+}
+
+.stat-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.stat-valor {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grafico-titulo {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 16px;
+}
+
+.grafico-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.grafico-linha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.grafico-nome {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    width: 140px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.grafico-barra-fundo {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.grafico-barra {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.85));
+    transition: width 0.8s ease;
+}
+
+.grafico-media {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+}

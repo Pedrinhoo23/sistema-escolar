@@ -33,16 +33,45 @@
         </header>
 
         <nav>
-            <button onclick="mostrarSecao('alunos')" class="ativo">Alunos</button>
+            <button onclick="mostrarSecao('dashboard')" class="ativo">Dashboard</button>
+            <button onclick="mostrarSecao('alunos')">Alunos</button>
             <button onclick="mostrarSecao('turmas')">Turmas</button>
             <button onclick="mostrarSecao('professores')">Professores</button>
             <button onclick="mostrarSecao('notas')">Notas</button>
         </nav>
 
         <main>
+            <!-- Secção Dashboard -->
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div class="stat-valor" id="stat-alunos">0</div>
+                        <div class="stat-label">Alunos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏫</div>
+                        <div class="stat-valor" id="stat-turmas">0</div>
+                        <div class="stat-label">Turmas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍🏫</div>
+                        <div class="stat-valor" id="stat-professores">0</div>
+                        <div class="stat-label">Professores</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-valor" id="stat-media">0</div>
+                        <div class="stat-label">Média geral</div>
+                    </div>
+                </div>
+                <div class="grafico-titulo">Médias por disciplina</div>
+                <div id="grafico-disciplinas" class="grafico-container"></div>
+            </section>
 
             <!-- Secção Alunos -->
-            <section id="alunos">
+           <section id="alunos" class="escondido">
                 <h2>Alunos</h2>
                 <div class="formulario">
                     <input type="text" id="aluno-nome" placeholder="Nome do aluno">
