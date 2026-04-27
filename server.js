@@ -48,6 +48,11 @@ app.post('/alunos', autenticar, (req, res) => {
     const result = db.prepare('INSERT INTO alunos (nome, numero, turma_id) VALUES (?, ?, ?)').run(nome, numero, turma_id);
     res.json({ id: result.lastInsertRowid, nome, numero, turma_id });
 });
+app.put('/alunos/:id', autenticar, (req, res) => {
+    const { nome, numero, turma_id } = req.body;
+    db.prepare('UPDATE alunos SET nome=?, numero=?, turma_id=? WHERE id=?').run(nome, numero, turma_id, req.params.id);
+    res.json({ mensagem: 'Aluno actualizado' });
+});
 
 app.delete('/alunos/:id', autenticar, (req, res) => {
     db.prepare('DELETE FROM alunos WHERE id = ?').run(req.params.id);
@@ -65,6 +70,16 @@ app.post('/turmas', autenticar, (req, res) => {
     const result = db.prepare('INSERT INTO turmas (nome, ano) VALUES (?, ?)').run(nome, ano);
     res.json({ id: result.lastInsertRowid, nome, ano });
 });
+app.put('/turmas/:id', autenticar, (req, res) => {
+    const { nome, ano } = req.body;
+    db.prepare('UPDATE turmas SET nome=?, ano=? WHERE id=?').run(nome, ano, req.params.id);
+    res.json({ mensagem: 'Turma actualizada' });
+});
+
+app.delete('/turmas/:id', autenticar, (req, res) => {
+    db.prepare('DELETE FROM turmas WHERE id = ?').run(req.params.id);
+    res.json({ mensagem: 'Turma removida' });
+});
 
 // Rotas dos professores
 app.get('/professores', autenticar, (req, res) => {
@@ -76,6 +91,16 @@ app.post('/professores', autenticar, (req, res) => {
     const { nome, disciplina } = req.body;
     const result = db.prepare('INSERT INTO professores (nome, disciplina) VALUES (?, ?)').run(nome, disciplina);
     res.json({ id: result.lastInsertRowid, nome, disciplina });
+});
+app.put('/professores/:id', autenticar, (req, res) => {
+    const { nome, disciplina } = req.body;
+    db.prepare('UPDATE professores SET nome=?, disciplina=? WHERE id=?').run(nome, disciplina, req.params.id);
+    res.json({ mensagem: 'Professor actualizado' });
+});
+
+app.delete('/professores/:id', autenticar, (req, res) => {
+    db.prepare('DELETE FROM professores WHERE id = ?').run(req.params.id);
+    res.json({ mensagem: 'Professor removido' });
 });
 
 // Rotas das notas
@@ -107,7 +132,16 @@ app.get('/dashboard', autenticar, (req, res) => {
         notasPorDisciplina
     });
 });
+app.put('/notas/:id', autenticar, (req, res) => {
+    const { disciplina, nota } = req.body;
+    db.prepare('UPDATE notas SET disciplina=?, nota=? WHERE id=?').run(disciplina, nota, req.params.id);
+    res.json({ mensagem: 'Nota actualizada' });
+});
 
+app.delete('/notas/:id', autenticar, (req, res) => {
+    db.prepare('DELETE FROM notas WHERE id = ?').run(req.params.id);
+    res.json({ mensagem: 'Nota removida' });
+});
 app.listen(PORT, () => {
     console.log(`Servidor a correr em http://localhost:${PORT}`);
 });

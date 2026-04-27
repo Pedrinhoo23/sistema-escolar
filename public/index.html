@@ -11,7 +11,7 @@
     <!-- Página de Login -->
     <div id="pagina-login">
         <div class="login-box">
-           <div class="icone">🏫</div>
+            <div class="icone">🏫</div>
             <h1>Sistema Escolar</h1>
             <p>Introduz as tuas credenciais para entrar</p>
             <input type="text" id="login-username" placeholder="Utilizador">
@@ -21,11 +21,11 @@
         </div>
     </div>
 
-    <!-- Sistema Principal (escondido até fazer login) -->
+    <!-- Sistema Principal -->
     <div id="sistema" class="escondido">
 
         <header>
-            <h1>🏫 Sistema de Gestão Escolar</h1>
+            <h1>🏫 Sistema Escolar</h1>
             <div class="header-direita">
                 <span id="nome-utilizador"></span>
                 <button onclick="fazerLogout()" class="btn-logout">Sair</button>
@@ -33,50 +33,53 @@
         </header>
 
         <nav>
-            <button onclick="mostrarSecao('dashboard')" class="ativo">Dashboard</button>
-            <button onclick="mostrarSecao('alunos')">Alunos</button>
-            <button onclick="mostrarSecao('turmas')">Turmas</button>
-            <button onclick="mostrarSecao('professores')">Professores</button>
-            <button onclick="mostrarSecao('notas')">Notas</button>
+            <button data-secao="dashboard" onclick="mostrarSecao(event,'dashboard')" class="ativo">Dashboard</button>
+            <button data-secao="alunos" onclick="mostrarSecao(event,'alunos')">Alunos</button>
+            <button data-secao="turmas" onclick="mostrarSecao(event,'turmas')">Turmas</button>
+            <button data-secao="professores" onclick="mostrarSecao(event,'professores')">Professores</button>
+            <button data-secao="notas" onclick="mostrarSecao(event,'notas')">Notas</button>
         </nav>
 
         <main>
-            <!-- Secção Dashboard -->
+
+            <!-- Dashboard -->
             <section id="dashboard">
                 <h2>Dashboard</h2>
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="mostrarSecaoNome('alunos')" style="cursor:pointer">
                         <div class="stat-icon">👨‍🎓</div>
                         <div class="stat-valor" id="stat-alunos">0</div>
                         <div class="stat-label">Alunos</div>
+                        <div class="stat-link">Ver todos →</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="mostrarSecaoNome('turmas')" style="cursor:pointer">
                         <div class="stat-icon">🏫</div>
                         <div class="stat-valor" id="stat-turmas">0</div>
                         <div class="stat-label">Turmas</div>
+                        <div class="stat-link">Ver todas →</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="mostrarSecaoNome('professores')" style="cursor:pointer">
                         <div class="stat-icon">👨‍🏫</div>
                         <div class="stat-valor" id="stat-professores">0</div>
                         <div class="stat-label">Professores</div>
+                        <div class="stat-link">Ver todos →</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="mostrarSecaoNome('notas')" style="cursor:pointer">
                         <div class="stat-icon">📊</div>
                         <div class="stat-valor" id="stat-media">0</div>
                         <div class="stat-label">Média geral</div>
+                        <div class="stat-link">Ver notas →</div>
                     </div>
                 </div>
                 <div class="grafico-titulo">Médias por disciplina</div>
                 <div id="grafico-disciplinas" class="grafico-container"></div>
             </section>
 
-            <!-- Secção Alunos -->
-           <section id="alunos" class="escondido">
-                <h2>Alunos</h2>
-                <div class="formulario">
-                    <input type="text" id="aluno-nome" placeholder="Nome do aluno">
-                    <input type="text" id="aluno-numero" placeholder="Número do aluno">
-                    <button onclick="adicionarAluno()">Adicionar Aluno</button>
+            <!-- Alunos -->
+            <section id="alunos" class="escondido">
+                <div class="secao-header">
+                    <h2>Alunos</h2>
+                    <button class="btn-adicionar" onclick="adicionarAluno()">+ Adicionar Aluno</button>
                 </div>
                 <table>
                     <thead>
@@ -84,20 +87,18 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Número</th>
-                            <th>Acção</th>
+                            <th>Acções</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-alunos"></tbody>
                 </table>
             </section>
 
-            <!-- Secção Turmas -->
+            <!-- Turmas -->
             <section id="turmas" class="escondido">
-                <h2>Turmas</h2>
-                <div class="formulario">
-                    <input type="text" id="turma-nome" placeholder="Nome da turma">
-                    <input type="text" id="turma-ano" placeholder="Ano">
-                    <button onclick="adicionarTurma()">Adicionar Turma</button>
+                <div class="secao-header">
+                    <h2>Turmas</h2>
+                    <button class="btn-adicionar" onclick="adicionarTurma()">+ Adicionar Turma</button>
                 </div>
                 <table>
                     <thead>
@@ -105,19 +106,18 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Ano</th>
+                            <th>Acções</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-turmas"></tbody>
                 </table>
             </section>
 
-            <!-- Secção Professores -->
+            <!-- Professores -->
             <section id="professores" class="escondido">
-                <h2>Professores</h2>
-                <div class="formulario">
-                    <input type="text" id="professor-nome" placeholder="Nome do professor">
-                    <input type="text" id="professor-disciplina" placeholder="Disciplina">
-                    <button onclick="adicionarProfessor()">Adicionar Professor</button>
+                <div class="secao-header">
+                    <h2>Professores</h2>
+                    <button class="btn-adicionar" onclick="adicionarProfessor()">+ Adicionar Professor</button>
                 </div>
                 <table>
                     <thead>
@@ -125,20 +125,18 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Disciplina</th>
+                            <th>Acções</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-professores"></tbody>
                 </table>
             </section>
 
-            <!-- Secção Notas -->
+            <!-- Notas -->
             <section id="notas" class="escondido">
-                <h2>Notas</h2>
-                <div class="formulario">
-                    <input type="number" id="nota-aluno" placeholder="ID do aluno">
-                    <input type="text" id="nota-disciplina" placeholder="Disciplina">
-                    <input type="number" id="nota-valor" placeholder="Nota (0-20)" min="0" max="20">
-                    <button onclick="adicionarNota()">Adicionar Nota</button>
+                <div class="secao-header">
+                    <h2>Notas</h2>
+                    <button class="btn-adicionar" onclick="adicionarNota()">+ Adicionar Nota</button>
                 </div>
                 <table>
                     <thead>
@@ -147,6 +145,7 @@
                             <th>Aluno ID</th>
                             <th>Disciplina</th>
                             <th>Nota</th>
+                            <th>Acções</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-notas"></tbody>
@@ -156,7 +155,21 @@
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Modal -->
+    <div id="modal-overlay" class="escondido" onclick="fecharModalFora(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-titulo"></h3>
+                <button class="modal-fechar" onclick="fecharModal()">✕</button>
+            </div>
+            <div id="modal-corpo" class="modal-corpo"></div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+                <button class="btn-guardar" id="modal-guardar">Guardar</button>
+            </div>
+        </div>
+    </div>
 
+    <script src="app.js"></script>
 </body>
 </html>
